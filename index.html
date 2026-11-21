@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 역설계 A to Z 보고서 — 나는 부자고, 잘생겼고, 축구도 잘한다 | 나는 가수다</title>
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="AI 역설계 A to Z 보고서 — 나는 가수다 · 호날두" />
+  <meta property="og:description" content="조회수 85만 회 돌파 바이럴 쇼츠의 컷·오디오 실측 데이터, AI 립싱크/Face Swap 분석 및 A~Z 재현 공정 보고서" />
+  <meta property="og:image" content="https://1pronano.github.io/ronaldo-nagasu-report/assets/full_0020.png" />
+  <style>
+    :root {
+      --bg: #080c14;
+      --bg-elevated: #0f1623;
+      --card: #131c2c;
+      --card-hover: #182338;
+      --border: #22304a;
+      --text: #eef2f8;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --gold: #facc15;
+      --gold-soft: rgba(250, 204, 21, 0.14);
+      --sky: #38bdf8;
+      --sky-soft: rgba(56, 189, 248, 0.14);
+      --emerald: #34d399;
+      --emerald-soft: rgba(52, 211, 153, 0.14);
+      --rose: #fb7185;
+      --rose-soft: rgba(251, 113, 133, 0.14);
+      --violet: #a78bfa;
+      --violet-soft: rgba(167, 139, 250, 0.14);
+      --radius: 14px;
+      --shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(900px 500px at 15% -5%, rgba(56, 189, 248, 0.10), transparent 60%),
+        radial-gradient(800px 450px at 88% 0%, rgba(250, 204, 21, 0.08), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--sky);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Sticky Nav */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(8, 12, 20, 0.82);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      color: #0b0f17;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 11px;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--card);
+      text-decoration: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(145deg, rgba(19, 28, 44, 0.95), rgba(12, 18, 30, 0.98));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold);
+      background: var(--gold-soft);
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.55rem, 2.7vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 .hl {
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      margin-bottom: 20px;
+    }
+
+    .meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .chip strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: var(--card-hover);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #eab308);
+      color: #090d16;
+      border-color: transparent;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #fde047, var(--gold));
+    }
+
+    .hero-preview {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #05080f;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      position: relative;
+    }
+
+    .hero-preview img {
+      max-height: 360px;
+      width: auto;
+      border-radius: 10px;
+      cursor: zoom-in;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      transition: transform 0.2s ease;
+    }
+
+    .hero-preview img:hover {
+      transform: scale(1.02);
+    }
+
+    .preview-caption {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(8, 12, 20, 0.86);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* Section */
+    section {
+      margin-top: 42px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-head h2 {
+      font-size: 1.32rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sec-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--sky-soft);
+      color: var(--sky);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    /* Grid cards */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .card:hover {
+      border-color: #33476b;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .stat-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .tag-gold { background: var(--gold-soft); color: var(--gold); }
+    .tag-sky { background: var(--sky-soft); color: var(--sky); }
+    .tag-emerald { background: var(--emerald-soft); color: var(--emerald); }
+    .tag-rose { background: var(--rose-soft); color: var(--rose); }
+    .tag-violet { background: var(--violet-soft); color: var(--violet); }
+
+    /* Callout */
+    .callout {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.08), rgba(56, 189, 248, 0.06));
+      border: 1px solid rgba(250, 204, 21, 0.28);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 18px;
+    }
+
+    .callout-title {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    /* Image cards */
+    .img-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .img-wrap {
+      background: #060910;
+      position: relative;
+      overflow: hidden;
+      cursor: zoom-in;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .img-wrap:hover img {
+      transform: scale(1.02);
+    }
+
+    .zoom-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(8, 12, 20, 0.82);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .img-body {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .img-body h3 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .img-body p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Table */
+    .table-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .search-input {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 13px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      min-width: 250px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--sky);
+    }
+
+    .filter-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      background: var(--sky-soft);
+      color: var(--sky);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    thead th {
+      background: #0d1421;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(34, 48, 74, 0.55);
+      vertical-align: top;
+    }
+
+    tbody tr:hover {
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
+    }
+
+    /* Workflow steps */
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--emerald);
+      background: var(--emerald-soft);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .step-card h3 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .step-card ul {
+      padding-left: 18px;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    .step-card li {
+      margin-bottom: 5px;
+    }
+
+    /* Lyrics list */
+    .lyrics-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      max-height: 440px;
+      overflow-y: auto;
+    }
+
+    .lyric-line {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 12px;
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(34, 48, 74, 0.65);
+      font-size: 0.87rem;
+    }
+
+    .lyric-line:last-child {
+      border-bottom: none;
+    }
+
+    .lyric-time {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 7, 13, 0.94);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-top {
+      width: 100%;
+      max-width: 1360px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 16px;
+    }
+
+    .lightbox-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .lightbox-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lb-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+
+    .lb-btn:hover {
+      background: var(--card-hover);
+    }
+
+    .lightbox-stage {
+      max-width: 96vw;
+      max-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-stage img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-caption {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-badge">AI 역설계 A to Z</span>
+        <span>나는 부자고, 잘생겼고, 축구도 잘한다 | 나는 가수다</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#summary">핵심 결론</a>
+        <a href="#metrics">실측 데이터</a>
+        <a href="#visuals">컷·소리표 &amp; 정밀 확대</a>
+        <a href="#timeline">18컷 타임라인</a>
+        <a href="#stack">AI 기술 스택</a>
+        <a href="#workflow">A~Z 재현 공정</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="hero" style="margin-top:0;">
+      <div>
+        <div class="hero-eyebrow">클로드눈 + 클로드귀 정밀 실측 역설계 보고서 · 2026-11-21</div>
+        <h1>
+          <span class="hl">「나는 가수다 · 호날두」</span><br />
+          AI 패러디 쇼츠 A to Z 완전 분해
+        </h1>
+        <p class="hero-desc">
+          MBC 《나는 가수다》 실제 무대·대기실 영상에 <strong>AI 호날두 발라드 노래(가상 보컬)</strong>, <strong>무대 립싱크/얼굴 합성</strong>, <strong>대기실 유명인 리액션 딥페이크(루니·김정은·네이마르·트럼프·즐라탄·안첼로티·메시·피구·페페·김여정)</strong>를 결합해 조회수 85만 회를 돌파한 바이럴 쇼츠의 구조·수치·도구·재현 공정을 실측 자료 기반으로 분해했습니다.
+        </p>
+        <div class="meta-chips">
+          <div class="chip">채널 <strong>떡밥연구소</strong></div>
+          <div class="chip">길이 <strong>2:18 (138.2초)</strong></div>
+          <div class="chip">원본 해상도 <strong>1080×1920 · 30fps</strong></div>
+          <div class="chip">조회수 <strong>851,139회</strong></div>
+          <div class="chip">좋아요 <strong>12,076</strong></div>
+          <div class="chip">댓글 <strong>2,000+</strong></div>
+          <div class="chip">업로드 <strong>2026-11-17</strong></div>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://www.youtube.com/shorts/Th29G4a2slM" target="_blank" rel="noopener">원본 쇼츠 열기 ↗</a>
+          <button class="btn" onclick="openLightboxBySrc('./assets/full_0020.png', '9:16 세로 쇼츠 프레임 규격 (full_0020.png)', '상/하 검은 레터박스 + 상단 2줄 고정 제목(나는 가수다 / 호날두) + 좌상단 나가수 로고 + 중앙 16:9 무대 + 하단 한/영 2단 자막')">프레임 규격 크게 보기</button>
+        </div>
+      </div>
+
+      <div class="hero-preview">
+        <img
+          src="./assets/full_0020.png"
+          alt="쇼츠 전체 레이아웃 실측 프레임"
+          class="zoomable"
+          data-title="9:16 쇼츠 전체 레이아웃 실측 (0:19~0:20 구간)"
+          data-caption="1080×1920 세로 캔버스 중앙에 16:9 가로 예능 화면을 얹고, 상단 2줄 고정 제목(흰색 나는 가수다 / 노란색 호날두)과 하단 한·영 2단 손글씨 자막을 배치한 표준 액자 구조."
+        />
+        <span class="preview-caption">클릭하여 1080×1920 원본 비율 확대</span>
+      </div>
+    </section>
+
+    <!-- 1. 핵심 결론 -->
+    <section id="summary">
+      <div class="section-head">
+        <h2><span class="sec-num">1</span>핵심 결론 (왜 이 영상이 터졌나)</h2>
+        <span class="section-sub">단순 얼굴 합성 밈을 넘어 한국형 발라드 예능 서사로 포장한 고몰입 패러디</span>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">한 줄 역설계 결론: "실제 《나는 가수다》 원본 영상 프레임 + AI 호날두 발라드 음원 + 대기실 10인 딥페이크 리액션 + 크로스디졸브 편집"</div>
+        <p style="font-size:0.92rem; color:var(--text);">
+          처음부터 풀 AI 영상(Text-to-Video)으로 무대를 생성한 것이 아니라, <strong>실제 《나는 가수다》 무대 풀샷·클로즈업·대기실 화면을 16:9 베이스 레이어로 그대로 유지</strong>한 채 등장인물의 얼굴·입모양만 AI로 교체(Face Swap + Lip-Sync)했습니다. 덕분에 조명·무대 밴드·코러스·방송 로고·현장 질감이 100% 실제 방송처럼 보여 시청자의 위화감을 없애고 몰입도를 극대화했습니다.
+        </p>
+      </div>
+
+      <div class="grid-4">
+        <div class="card">
+          <span class="tag tag-gold">기획 / 서사</span>
+          <h3 style="margin:10px 0 6px; font-size:1rem;">밈 대사의 진지한 발라드화</h3>
+          <p class="stat-note">호날두의 밈 어록(“나는 부자고 잘생겼고 축구도 잘한다”, “시우우우-”, “유로 우승 = 월드컵”)을 호소력 짙은 정통 한국 발라드 가사로 엮어 부조화 코미디 극대화.</p>
+        </div>
+        <div class="card">
+          <span class="tag tag-sky">시각 / 베이스</span>
+          <h3 style="margin:10px 0 6px; font-size:1rem;">실사 방송 + 타깃 Face Swap</h3>
+          <p class="stat-note">흰 재킷 가수의 열창 몸짓·손짓·카메라 워킹은 실사 원본을 쓰고 얼굴만 호날두로 합성. 대기실 10명(메시·루니·즐라탄·트럼프·김정은 등)도 기존 안경·수트 위에 얼굴만 정교하게 교체.</p>
+        </div>
+        <div class="card">
+          <span class="tag tag-emerald">편집 / 리듬</span>
+          <h3 style="margin:10px 0 6px; font-size:1rem;">짧은 리액션 + 감성 디졸브</h3>
+          <p class="stat-note">대기실 리액션은 1.5~3.0초로 짧게 치고 빠지고, 호날두 열창 전환부(13.3초, 36초, 78초, 100초)는 0.6~1초 크로스디졸브로 겹쳐 예능 감동 톤을 재현.</p>
+        </div>
+        <div class="card">
+          <span class="tag tag-violet">패키징 / 글로벌</span>
+          <h3 style="margin:10px 0 6px; font-size:1rem;">9:16 액자 + 한/영 이중 자막</h3>
+          <p class="stat-note">상단 2줄 굵은 제목으로 0.1초 훅을 걸고, 하단 손글씨체 한국어+영어 동시 자막과 영문 설명란을 넣어 국내·해외 축구 팬덤 양쪽 트래픽 동시 흡수.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 실측 데이터 -->
+    <section id="metrics">
+      <div class="section-head">
+        <h2><span class="sec-num">2</span>클로드눈 · 클로드귀 실측 데이터</h2>
+        <span class="section-sub">요약.txt · 컷표.json · 소리표.json · 영상.info.json 실측값</span>
+      </div>
+
+      <div class="grid-4" style="margin-bottom:18px;">
+        <div class="card">
+          <div class="stat-label">총 길이 / 프레임</div>
+          <div class="stat-value">2:18 <span style="font-size:0.95rem; color:var(--text-muted);">(138.2초)</span></div>
+          <div class="stat-note">30 fps · 원본 1080×1920 (분석본 360×640) · 쇼츠 최장권 활용</div>
+        </div>
+        <div class="card">
+          <div class="stat-label">자동 검출 컷 수</div>
+          <div class="stat-value">18컷 <span style="font-size:0.95rem; color:var(--sky);">평균 7.7초</span></div>
+          <div class="stat-note">최단 1.5초 / 최장 39.0초 (디졸브 구간 내 세부 전환 별도 존재)</div>
+        </div>
+        <div class="card">
+          <div class="stat-label">통합 음량 / 피크</div>
+          <div class="stat-value">-17.0 <span style="font-size:0.95rem; color:var(--gold);">LUFS</span></div>
+          <div class="stat-note">최고점 -5.3 dBTP · LRA 9.6 LU (유튜브 -14 LUFS보다 약간 작음)</div>
+        </div>
+        <div class="card">
+          <div class="stat-label">음악 비중 / 가사</div>
+          <div class="stat-value">97% <span style="font-size:0.95rem; color:var(--emerald);">(134초)</span></div>
+          <div class="stat-note">효과음 1회(1:32.5 경적) · 가사 15줄 273자 (분당 156자)</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-size:1rem; margin-bottom:12px;">클로드눈 시각 실측 요약</h3>
+          <table>
+            <tbody>
+              <tr><th style="width:36%; color:var(--text-muted);">컷 검출 조건</th><td>초당 2.0장 샘플링, 문턱 18.0, 최소간격 1.0초</td></tr>
+              <tr><th style="color:var(--text-muted);">화면 톤 분포</th><td>어두운 컷 18개 (<strong>100%</strong>) · 밝은 컷 0 · 흑백/세피아 0%</td></tr>
+              <tr><th style="color:var(--text-muted);">컷 안 움직임</th><td>평균 6.7회 · 변화 없는 정적 컷 8개 (리액션 클로즈업 중심)</td></tr>
+              <tr><th style="color:var(--text-muted);">레이아웃 비율</th><td>9:16 세로 캔버스 내 중앙 16:9 가로 무대 + 상·하단 블랙 레터박스</td></tr>
+              <tr><th style="color:var(--text-muted);">고정 브랜딩</th><td>상단 2줄 제목(흰색 <code>나는 가수다</code> / 노란색 <code>호날두</code>) + 좌상단 로고</td></tr>
+              <tr><th style="color:var(--text-muted);">자막 스타일</th><td>한국어(상) + 영어(하) 2줄 손글씨체 + 두꺼운 검은색 외곽선(우하단/중앙하단)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size:1rem; margin-bottom:12px;">클로드귀 오디오 실측 요약</h3>
+          <table>
+            <tbody>
+              <tr><th style="width:36%; color:var(--text-muted);">음량 / 다이내믹</th><td>통합 -16.97 LUFS / 최고점 -5.26 dBTP / 폭(LRA) 9.6 LU</td></tr>
+              <tr><th style="color:var(--text-muted);">무음 구간</th><td>1곳, 0.8초 (1%) — 영상 끝 2:17~2:18 페이드아웃 여백</td></tr>
+              <tr><th style="color:var(--text-muted);">말 vs 음악 판별</th><td>순수 말 구간 3초(2%) / 음악(보컬+반주) 134초(97%) / 바닥 -37 dBFS</td></tr>
+              <tr><th style="color:var(--text-muted);">효과음 검출</th><td>총 1개 (1:32.5 · 경적 <code>Air horn</code> · -17.1 dBFS · 판별 0.39)</td></tr>
+              <tr><th style="color:var(--text-muted);">큰소리 피크</th><td>가창 고음부(0:14~0:45 등)에 -10.3 ~ -13.8 dBFS 피크 다수</td></tr>
+              <tr><th style="color:var(--text-muted);">가사 전사(Speechmatics)</th><td>한국어(ko) 확신 100% · 15줄 273자 · 발화 중 분당 156자</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 컷표 / 소리표 / 정밀 확대 이미지 -->
+    <section id="visuals">
+      <div class="section-head">
+        <h2><span class="sec-num">3</span>실측 시각화 차트 &amp; 정밀 확대 프레임 (클릭 시 확대)</h2>
+        <span class="section-sub">모든 이미지를 클릭하면 라이트박스로 고해상도 확대 및 키보드(← / → / ESC) 탐색 가능</span>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/cut_sheet.png"
+              alt="18컷 전체 컷표"
+              class="zoomable"
+              data-title="클로드눈 18컷 대표 프레임 격자 (컷표.png · 2560×1773)"
+              data-caption="자동 컷 검출 기준 18개 컷의 대표 프레임과 시작 시각·길이 요약. 무대 열창 컷과 대기실 유명인 리액션 컷이 교차 배치되는 구조를 한눈에 확인할 수 있습니다."
+            />
+            <span class="zoom-badge">클릭 확대</span>
+          </div>
+          <div class="img-body">
+            <h3>전체 18컷 대표 그리드 (컷표.png)</h3>
+            <p>무대 위 호날두 열창 컷과 대기실 리액션 컷(루니·김정은·네이마르·트럼프·즐라탄·안첼로티·메시·김여정)의 교차 구조를 한눈에 보여주는 컷표.</p>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/audio_sheet.png"
+              alt="소리표 에너지 파형"
+              class="zoomable"
+              data-title="클로드귀 오디오 에너지 & 구간 타임라인 (소리표.png · 1600×962)"
+              data-caption="전 구간 -17.0 LUFS 수준의 안정적 발라드 반주+AI 보컬 파형(녹색 음악 바), 1:32.5 빨간 경적 효과음 마커, 2:17 끝부분 0.8초 무음 구간이 확인됩니다."
+            />
+            <span class="zoom-badge">클릭 확대</span>
+          </div>
+          <div class="img-body">
+            <h3>오디오 에너지 · 효과음 타임라인 (소리표.png)</h3>
+            <p>0초부터 2:17까지 97% 구간이 끊김 없는 음악+노래로 채워져 있으며, 1:32.5 지점 빨간 세로선(경적 효과음) 단 1회만 삽입된 구조.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.05rem; margin:24px 0 12px; color:var(--gold);">정밀 프레임 확대 4종 (AI 립싱크 · 크로스디졸브 · 대기실 Face Swap 증거)</h3>
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/zoom_a_ronaldo_lipsync.jpg"
+              alt="확대 A 호날두 립싱크 및 디졸브"
+              class="zoomable"
+              data-title="확대 A: 호날두 무대 립싱크 & 크로스디졸브 실측 (13.00s ~ 14.83s)"
+              data-caption="13.17s~13.83s 프레임에서 클로즈업 호날두와 바스트 샷 호날두가 반투명으로 겹치는 전형적인 NLE 크로스디졸브가 확인됩니다. 14.00s~14.83s에서는 가사('나는 부자고')에 맞춰 입술·턱선·미간이 자연스럽게 움직입니다."
+            />
+            <span class="zoom-badge">확대 A</span>
+          </div>
+          <div class="img-body">
+            <h3>A. 호날두 열창 립싱크 &amp; 0.7초 크로스디졸브 (0:13~0:15)</h3>
+            <p>13.17초~13.83초 사이 두 카메라 앵글이 반투명으로 겹쳐 전환되며, 이후 흰 재킷·마이크·팔찌가 원본 실사 그대로 유지된 채 호날두 얼굴만 입모양을 맞춰 노래함.</p>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/zoom_b_rooney.jpg"
+              alt="확대 B 루니 리액션 Face Swap"
+              class="zoomable"
+              data-title="확대 B: 대기실 웨인 루니 리액션 Face Swap 실측 (20.20s ~ 22.03s)"
+              data-caption="실제 예능 대기실 인물의 하얀 뿔테 안경, 귀걸이, 의상, 마이크, 뒤편 인물 어깨와 목재 벽면은 그대로 두고 안경 안쪽 얼굴만 웨인 루니로 교체한 영상 Face Swap 정밀 프레임."
+            />
+            <span class="zoom-badge">확대 B</span>
+          </div>
+          <div class="img-body">
+            <h3>B. 웨인 루니 대기실 리액션 Face Swap (0:20~0:22)</h3>
+            <p>원본 출연자의 하얀 뿔테 안경테와 조명이 살아있으면서 눈·코·입·피부 톤만 루니로 치환된 정교한 비디오 페이스 스왑 사례.</p>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/zoom_c_zlatan.jpg"
+              alt="확대 C 즐라탄 리액션 Face Swap"
+              class="zoomable"
+              data-title="확대 C: 대기실 즐라탄 이브라히모비치 리액션 실측 (46.50s ~ 48.33s)"
+              data-caption="노란 재킷과 짙은 네이비 셔츠, 대기실 배경은 원본 방송 그대로이며 47.17s 프레임에서 자연스러운 눈 깜빡임까지 보존된 채 즐라탄의 강렬한 응시가 구현되었습니다."
+            />
+            <span class="zoom-badge">확대 C</span>
+          </div>
+          <div class="img-body">
+            <h3>C. 즐라탄 이브라히모비치 리액션 (0:46~0:48)</h3>
+            <p>47.17초 눈 깜빡임 모션이 프레임 단위로 부드럽게 이어지며, 노란 재킷 의상·머리카락 경계가 깨지지 않고 자연스럽게 블렌딩됨.</p>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/zoom_d_messi.jpg"
+              alt="확대 D 메시 리액션 Face Swap"
+              class="zoomable"
+              data-title="확대 D: 대기실 리오넬 메시 리액션 실측 (68.50s ~ 70.33s)"
+              data-caption="가사 '월드컵을 몇 번 우승했나?'가 나오는 순간 대기실 메시 컷을 꽂아 웃음 포인트를 만든 장면. 검은 뿔테 안경·귀걸이·검은 재킷 위에 메시 얼굴이 합성되어 눈썹 찡그림과 미소가 살아 있습니다."
+            />
+            <span class="zoom-badge">확대 D</span>
+          </div>
+          <div class="img-body">
+            <h3>D. 리오넬 메시 핵심 펀치라인 리액션 (1:08~1:10)</h3>
+            <p>“월드컵을 몇 번 우승했나?” 가사 타이밍에 맞춘 메시 컷인. 검은 뿔테 안경과 고개 움직임에 맞춰 미세하게 찡그리는 표정 연기가 그대로 이식됨.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.05rem; margin:24px 0 12px; color:var(--sky);">주요 단일 컷 &amp; 2초 간격 전체 시퀀스</h3>
+      <div class="grid-3" style="margin-bottom:20px;">
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/cut_0m00s_stage.jpg"
+              alt="0분00초 무대 풀샷"
+              class="zoomable"
+              data-title="0:00 오프닝 무대 풀샷 (컷_0m00s_무대풀샷.jpg)"
+              data-caption="좌측 퍼커션·밴드, 우측 다른 출연 가수 4명, 중앙 원형 무대 위 흰 재킷 호날두 스탠드 마이크 풀샷. 실제 방송 무대 원소스를 그대로 사용한 핵심 증거."
+            />
+            <span class="zoom-badge">0:00 풀샷</span>
+          </div>
+          <div class="img-body">
+            <h3>0:00 오프닝 풀샷 (실사 무대 증거)</h3>
+            <p>좌측 타악기 세션과 우측 출연 가수진 구도가 《나는 가수다》 원형 무대 풀샷임을 명확히 보여줌.</p>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/cut_1m28s.jpg"
+              alt="1분28초 하이라이트"
+              class="zoomable"
+              data-title="1:28 호날두 고음 절정 클로즈업 (컷_1m28s.jpg)"
+              data-caption="눈을 질끈 감고 두 손으로 마이크를 감싼 고음 열창 컷. '포르투갈의 유로 우승은' 한/영 이중 손글씨 자막 배치."
+            />
+            <span class="zoom-badge">1:28 클로즈업</span>
+          </div>
+          <div class="img-body">
+            <h3>1:28 고음 열창 &amp; 손글씨 자막</h3>
+            <p>미간 주름과 눈 감은 표정, 마이크 쥔 손 피부 톤까지 정합성이 높은 클로즈업 컷.</p>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/cut_1m59s.jpg"
+              alt="1분59초 김여정 리액션"
+              class="zoomable"
+              data-title="1:59 후반 카메오 리액션 컷 (컷_1m59s.jpg)"
+              data-caption="1:59.5~2:01 구간에 1.5초 짧게 삽입된 여성 패널 얼굴 교체(김여정) 카메오 컷."
+            />
+            <span class="zoom-badge">1:59 카메오</span>
+          </div>
+          <div class="img-body">
+            <h3>1:59 후반 카메오 리액션 (1.5초)</h3>
+            <p>후반부 하이라이트 직전 1.5초간 치고 빠지는 예상 밖 카메오 리액션으로 지루함 방지.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/seq_2s_part1.jpg"
+              alt="전체 2초간격 1 (0:00~1:06)"
+              class="zoomable"
+              data-title="전반부 2초 간격 전체 시퀀스 (0:00 ~ 1:06)"
+              data-caption="0초 무대 풀샷부터 20초 루니, 26초 김정은, 30초 네이마르, 36초 디졸브, 40초 트럼프, 46초 즐라탄, 54~56초 안첼로티, 64~66초 무대 풀샷까지 2초 단위 전개."
+            />
+            <span class="zoom-badge">0:00~1:06</span>
+          </div>
+          <div class="img-body">
+            <h3>전반부 2초 간격 전수 시트 (0:00 ~ 1:06)</h3>
+            <p>디졸브 내부 컷과 등장 카메오 흐름을 2초 단위로 확인.</p>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-wrap">
+            <img
+              src="./assets/seq_2s_part2.jpg"
+              alt="전체 2초간격 2 (1:08~2:16)"
+              class="zoomable"
+              data-title="후반부 2초 간격 전체 시퀀스 (1:08 ~ 2:16)"
+              data-caption="1:08 메시, 1:16 루이스 피구, 1:18 디졸브, 1:22~24 페페, 1:28 안경 패널, 1:34~38 트럼프 3연속, 1:40 디졸브, 1:46~48 페페, 1:50~52 메시, 2:01~2:16 엔딩 열창."
+            />
+            <span class="zoom-badge">1:08~2:16</span>
+          </div>
+          <div class="img-body">
+            <h3>후반부 2초 간격 전수 시트 (1:08 ~ 2:16)</h3>
+            <p>메시·피구·페페·트럼프가 연달아 교차하는 후반부 몰아치기 구간.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 전체 타임라인 컷별 분해표 & 가사 전문 -->
+    <section id="timeline">
+      <div class="section-head">
+        <h2><span class="sec-num">4</span>전체 타임라인 컷별 분해표 &amp; 전사 가사</h2>
+        <span class="section-sub">컷표.json(18컷) + 전체_2초간격_1/2 육안 판독 + Speechmatics 15줄 대사 매칭</span>
+      </div>
+
+      <div class="table-controls">
+        <input type="text" id="cutSearch" class="search-input" placeholder="인물명, 가사, 기법 검색 (예: 메시, 디졸브, 트럼프)..." />
+        <button class="filter-btn active" data-filter="all">전체 18컷</button>
+        <button class="filter-btn" data-filter="stage">무대(호날두)</button>
+        <button class="filter-btn" data-filter="reaction">대기실 리액션</button>
+      </div>
+
+      <div class="table-wrap" style="margin-bottom:24px;">
+        <table id="cutTable">
+          <thead>
+            <tr>
+              <th>컷</th>
+              <th>시간 (길이)</th>
+              <th>구분</th>
+              <th>등장인물 / 화면 구성 (2초 시퀀스 육안 포함)</th>
+              <th>밝기 / 움직임</th>
+              <th>대사 / 자막 맥락 &amp; 편집 포인트</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-type="stage">
+              <td class="mono"><strong>#01</strong></td>
+              <td class="mono">0:00 ~ 0:20<br><span style="color:var(--sky);">(20.0초)</span></td>
+              <td><span class="tag tag-sky">무대</span></td>
+              <td>무대 풀샷(0s) → 호날두 클로즈업(2~12s) → <strong>크로스디졸브(13.3s)</strong> → 바스트 열창(14~19s)</td>
+              <td class="mono">밝기 18.9<br>움직임 28</td>
+              <td>“월드컵 우승 한다고 내 이름이 달라지지는 않는다 / 나는 부자고 잘생겼고 축구도 잘한다” · 오프닝 훅 + 첫 디졸브</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#02</strong></td>
+              <td class="mono">0:20 ~ 0:22.5<br><span style="color:var(--gold);">(2.5초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>웨인 루니</strong> (하얀 뿔테 안경 + 흰 수트)</td>
+              <td class="mono">밝기 47.4<br>움직임 0</td>
+              <td>“사람들이 나를 (People seem)” · 정적 컷으로 씁쓸하게 듣는 표정</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#03</strong></td>
+              <td class="mono">0:22.5 ~ 0:25.5<br><span style="color:var(--sky);">(3.0초)</span></td>
+              <td><span class="tag tag-sky">무대</span></td>
+              <td>호날두 정면 클로즈업 (마이크 양손)</td>
+              <td class="mono">밝기 18.0<br>움직임 3</td>
+              <td>“질투하는 것 같다 (to be jealous of me)”</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#04</strong></td>
+              <td class="mono">0:25.5 ~ 0:27.5<br><span style="color:var(--gold);">(2.0초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>김정은</strong> (안경 + 흰 옷, 대기실 응시)</td>
+              <td class="mono">밝기 46.6<br>움직임 0</td>
+              <td>“시우우우- (SIUUUU-)” 첫 애드리브 구간 카메오 충격</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#05</strong></td>
+              <td class="mono">0:27.5 ~ 0:29<br><span style="color:var(--sky);">(1.5초)</span></td>
+              <td><span class="tag tag-sky">무대</span></td>
+              <td>호날두 측면 미디엄 샷 (흰 재킷)</td>
+              <td class="mono">밝기 16.8<br>움직임 0</td>
+              <td>“시우우우- (SIUUUU-)”</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#06</strong></td>
+              <td class="mono">0:29 ~ 0:31<br><span style="color:var(--gold);">(2.0초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>네이마르</strong> (스트라이프 재킷 + 안경)</td>
+              <td class="mono">밝기 38.1<br>움직임 3</td>
+              <td>“사람들은 내가 월드컵을 우승하면”</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#07</strong></td>
+              <td class="mono">0:31 ~ 0:39.5<br><span style="color:var(--sky);">(8.5초)</span></td>
+              <td><span class="tag tag-sky">무대</span></td>
+              <td>호날두 얼굴 빅 클로즈업(32~34s) → <strong>디졸브+풀샷(36~38s)</strong></td>
+              <td class="mono">밝기 21.8<br>움직임 8</td>
+              <td>“GOAT가 될 거라고 한다 / 나는 동의하지 않는다” · 36초 관객석 반사 디졸브</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#08</strong></td>
+              <td class="mono">0:39.5 ~ 0:41<br><span style="color:var(--gold);">(1.5초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>도널드 트럼프</strong> (빨간 의상, 손으로 턱 굄)</td>
+              <td class="mono">밝기 39.0<br>움직임 0</td>
+              <td>“않는다 (agree)” · 1.5초 초단타 리액션</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#09</strong></td>
+              <td class="mono">0:41 ~ 0:46.5<br><span style="color:var(--sky);">(5.5초)</span></td>
+              <td><span class="tag tag-sky">무대</span></td>
+              <td>호날두 좌측면 바스트 샷</td>
+              <td class="mono">밝기 17.2<br>움직임 9</td>
+              <td>“대회 하나, 여섯 경기”</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#10</strong></td>
+              <td class="mono">0:46.5 ~ 0:48.5<br><span style="color:var(--gold);">(2.0초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>즐라탄 이브라히모비치</strong> (노란 재킷)</td>
+              <td class="mono">밝기 43.0<br>움직임 0</td>
+              <td>“일곱 경기로 / 그게 공정하다고 생각하나”</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#11</strong></td>
+              <td class="mono">0:48.5 ~ 0:54.5<br><span style="color:var(--sky);">(6.0초)</span></td>
+              <td><span class="tag tag-sky">무대</span></td>
+              <td>호날두 열창(48~52s) → <strong>카를로 안첼로티</strong>(54s~)</td>
+              <td class="mono">밝기 17.2<br>움직임 6</td>
+              <td>“공정하지 않다 (It's not fair)” · 감독 안첼로티 고뇌 표정 연결</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#12</strong></td>
+              <td class="mono">0:54.5 ~ 1:08<br><span style="color:var(--sky);">(13.5초)</span></td>
+              <td><span class="tag tag-sky">복합</span></td>
+              <td>안첼로티(56s) → 호날두 빅 클로즈업(58~62s) → 무대 풀샷(64~66s)</td>
+              <td class="mono">밝기 20.6<br>움직임 16</td>
+              <td>“시우우우우우-” &amp; “메시 이전에 아르헨티나는” · 풀샷으로 전환</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#13</strong></td>
+              <td class="mono">1:08 ~ 1:12<br><span style="color:var(--gold);">(4.0초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>리오넬 메시</strong> (검은 뿔테 안경 + 귀걸이 + 검은 재킷)</td>
+              <td class="mono">밝기 27.9<br>움직임 0</td>
+              <td>“월드컵을 몇 번 우승했나? (How many World Cups?)” · 최고 하이라이트 매칭</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#14</strong></td>
+              <td class="mono">1:12 ~ 1:51<br><span style="color:var(--rose);">(39.0초)</span></td>
+              <td><span class="tag tag-rose">연속 몽타주</span></td>
+              <td>호날두(1:12~14) → <strong>피구</strong>(1:16) → 디졸브(1:18) → 호날두(1:20) → <strong>페페</strong>(1:22~24) → 호날두(1:26) → 안경 패널(1:28) → 호날두(1:30~32) → <strong>트럼프</strong>(1:34~38) → 디졸브(1:40) → 호날두(1:42~44) → <strong>페페</strong>(1:46~48) → <strong>메시</strong>(1:50)</td>
+              <td class="mono">밝기 24.9<br>움직임 32</td>
+              <td>“크리스티아누 이전 포르투갈 / 유로 우승 = 월드컵(1:32.5 경적 SFX!) / 모두가 내 수준이었다면 나도 우승했을 것” · 부드러운 톤 전환이 많아 1개 긴 컷으로 묶인 2부 절정 몽타주</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#15</strong></td>
+              <td class="mono">1:51 ~ 1:54<br><span style="color:var(--gold);">(3.0초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>리오넬 메시</strong> 재등장 (어두운 대기실)</td>
+              <td class="mono">밝기 28.1<br>움직임 0</td>
+              <td>“우승했을 것이다 (the World Cup too)” · 여운 있는 2차 메시 컷</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#16</strong></td>
+              <td class="mono">1:54 ~ 1:59.5<br><span style="color:var(--sky);">(5.5초)</span></td>
+              <td><span class="tag tag-sky">무대</span></td>
+              <td>호날두 측면 열창</td>
+              <td class="mono">밝기 14.9<br>움직임 1</td>
+              <td>“시우우우우우- (SIUUUUUU-)”</td>
+            </tr>
+            <tr data-type="reaction">
+              <td class="mono"><strong>#17</strong></td>
+              <td class="mono">1:59.5 ~ 2:01<br><span style="color:var(--gold);">(1.5초)</span></td>
+              <td><span class="tag tag-gold">리액션</span></td>
+              <td><strong>김여정</strong> (대기실 여성 패널 합성)</td>
+              <td class="mono">밝기 42.2<br>움직임 0</td>
+              <td>“시우우우우우-” · 후반부 예상 밖 카메오 1.5초</td>
+            </tr>
+            <tr data-type="stage">
+              <td class="mono"><strong>#18</strong></td>
+              <td class="mono">2:01 ~ 2:18<br><span style="color:var(--sky);">(17.0초)</span></td>
+              <td><span class="tag tag-sky">무대 엔딩</span></td>
+              <td>호날두 정면 클로즈업 → 눈 감고 여운 엔딩</td>
+              <td class="mono">밝기 17.7<br>움직임 15</td>
+              <td>“나는 부자고 잘생겼고 축구도 잘한다 / 사람들이 나를 질투하는 것 같다” · 수미상관 엔딩</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:1rem; margin-bottom:10px;">Speechmatics 음성 전사 가사 전문 (대사.txt · 15줄 273자)</h3>
+        <div class="lyrics-box">
+          <div class="lyric-line"><span class="lyric-time mono">[0:02]</span><span>월드컵 우승 한다고 축구에서 내 이름이 달라지지는 않는다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[0:13]</span><span>나는 보자고(부자고) 잘 생겼고 축구도 잘 한다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[0:20]</span><span>사람들이 나를 질투하는 것 같아 아쉬운 사람들은 내가 월드컵을 우승하면 코트(GOAT)가 될 거라고 한다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[0:36]</span><span>나는 동의하지 않는다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[0:42]</span><span>대회 하나, 여섯, 경기 일곱 경기로 그게 공정하다고 생각하나?</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[0:51]</span><span>공정하지 않다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[0:57]</span><span>추운 날씨(메시) 이전에 아르헨티나는 월드컵을 몇 번 우승했나?</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[1:11]</span><span>크리스티아누.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[1:12]</span><span>이전에 포르투갈은 아무 것도 우승 하지 못했다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[1:18]</span><span>크리스티아누 포르투갈은 유로 에서 우승했다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[1:26]</span><span>포르투갈의 유로 우승은 월드컵 우승과 같다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[1:41]</span><span>모두가 내 수준이 없다면(수준이었다면) 나도 월드컵 우승했을 것이다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[1:53]</span><span>아쉬움(시우우우).</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[2:01]</span><span>나는 푸자고(부자고) 잘 생겼고, 축구도 잘 한다.</span></div>
+          <div class="lyric-line"><span class="lyric-time mono">[2:08]</span><span>사람들이 나를 질투하는 것 같다.</span></div>
+        </div>
+        <p class="stat-note" style="margin-top:10px;">※ 전사 모델에서 ‘부자고→보자고/푸자고’, ‘GOAT→코트’, ‘메시→날씨’, ‘시우→아쉬움’으로 인식된 것은 <strong>외국인(호날두) 특유의 한국어 발음 뉘앙스</strong>가 AI 보컬/보이스 변환에 반영되었음을 보여주는 직접적인 청각 단서입니다.</p>
+      </div>
+    </section>
+
+    <!-- 5. 요소별 AI 도구 & 기술 스택 -->
+    <section id="stack">
+      <div class="section-head">
+        <h2><span class="sec-num">5</span>요소별 AI 도구 &amp; 기술 스택 역설계</h2>
+        <span class="section-sub">실측 증거를 바탕으로 추정한 제작 파이프라인별 도구 매핑</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <span class="tag tag-emerald">1. 오디오 · AI 보컬</span>
+          <h3 style="margin:10px 0 8px; font-size:1.05rem;">AI 발라드 작곡 + 호날두 음색(RVC) 결합</h3>
+          <ul style="padding-left:18px; color:var(--text-muted); font-size:0.88rem;">
+            <li style="margin-bottom:6px;"><strong>작사/컨셉 (LLM):</strong> 실제 호날두 인터뷰 밈(“I'm rich, handsome, and great at football”, 유로 우승 발언)을 한국어 발라드 문체로 번역·각색.</li>
+            <li style="margin-bottom:6px;"><strong>발라드 반주+가창 (Suno / Udio):</strong> 한국식 정통 록발라드 스타일(피아노→스트링→고음 폭발)로 MR과 가이드 보컬을 동시 생성.</li>
+            <li style="margin-bottom:6px;"><strong>보이스 스왑 (RVC · Retrieval-based Voice Conversion):</strong> 생성된 보컬 스템(UVR5로 반주 분리)에 호날두 음성 학습 모델을 씌워 호날두 톤과 외국인 발음 질감 구현.</li>
+            <li><strong>효과음:</strong> 1:32.5 지점 ‘유로 우승=월드컵’ 펀치라인에만 경적(Air horn) 1회 삽입.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-sky">2. 무대 영상 · AI 립싱크</span>
+          <h3 style="margin:10px 0 8px; font-size:1.05rem;">실사 방송 무대 위 얼굴 교체 + 립싱크</h3>
+          <ul style="padding-left:18px; color:var(--text-muted); font-size:0.88rem;">
+            <li style="margin-bottom:6px;"><strong>베이스 영상:</strong> 《나는 가수다》 실제 무대 풀샷·바스트·클로즈업 원본(흰 재킷·스탠드 마이크·밴드·조명 100% 보존).</li>
+            <li style="margin-bottom:6px;"><strong>얼굴 교체 + 입모양 구동:</strong> FaceFusion / Roop 계열 Video Face Swap으로 호날두 얼굴을 씌운 뒤, MuseTalk · Wav2Lip · LivePortrait · HeyGen · Kling 립싱크 등으로 발라드 가사에 맞춰 입·턱·눈 감기 모션을 정교하게 동기화.</li>
+            <li><strong>검증 근거:</strong> 손목 팔찌·마이크·무대 조명이 프레임마다 흔들림 없이 실제 방송과 일치하며, 13.17s~13.83s 디졸브 구간에서도 배경 밴드와 마이크 위치가 일관됨.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-gold">3. 대기실 리액션 딥페이크</span>
+          <h3 style="margin:10px 0 8px; font-size:1.05rem;">안경·의상 보존형 Multi-Target Face Swap</h3>
+          <ul style="padding-left:18px; color:var(--text-muted); font-size:0.88rem;">
+            <li style="margin-bottom:6px;"><strong>캐스팅 전략 (10명):</strong> 축구인(메시·루니·즐라탄·네이마르·피구·페페·안첼로티) + 의외성 카메오(트럼프·김정은·김여정).</li>
+            <li style="margin-bottom:6px;"><strong>도구군:</strong> FaceFusion (InsightFace `inswapper_128` + GFPGAN/CodeFormer 업스케일 + Occlusion Masking) 또는 Akool / SwapFace.</li>
+            <li><strong>핵심 디테일:</strong> 루니의 흰 뿔테 안경, 메시의 검은 뿔테 안경·귀걸이, 즐라탄의 눈 깜빡임(`확대_B/C/D` 실측)이 깨지지 않도록 마스크/고해상도 복원 파이프라인 사용.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="tag tag-rose">4. NLE 편집 · 자막 · 패키징</span>
+          <h3 style="margin:10px 0 8px; font-size:1.05rem;">9:16 액자 + 크로스디졸브 + 한/영 이중자막</h3>
+          <ul style="padding-left:18px; color:var(--text-muted); font-size:0.88rem;">
+            <li style="margin-bottom:6px;"><strong>편집기:</strong> Premiere Pro / CapCut / DaVinci Resolve.</li>
+            <li style="margin-bottom:6px;"><strong>전환 연출:</strong> 리액션은 하드 컷(1.5~3초)으로 펀치라인을 살리고, 무대 열창 구간끼리는 0.6~1.0초 크로스디졸브(<code>확대_A</code> 13.3s, 36s, 78s, 100s)로 감동 서사 연결.</li>
+            <li><strong>자막 &amp; 제목:</strong> 상단 2줄 고딕 고정(<code>나는 가수다</code> 흰색 / <code>호날두</code> 노란색), 하단 손글씨 폰트+두꺼운 검은 외곽선 한/영 2줄 자막으로 국내외 동시 시청 확보.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. A~Z 실전 재현 워크플로우 -->
+    <section id="workflow">
+      <div class="section-head">
+        <h2><span class="sec-num">6</span>A to Z 실전 재현 워크플로우 (벤치마킹 공정)</h2>
+        <span class="section-sub">이 포맷을 우리 채널 규격으로 재현·변주할 때 따라야 할 6단계 공정</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="step-card">
+          <span class="step-badge">STEP A · 기획 &amp; 대본</span>
+          <h3>어록 추출 + 2분 15초 서사 설계</h3>
+          <ul>
+            <li>주인공의 대표 어록·논란·라이벌 구도를 15줄 내외의 1인칭 고백 가사로 작성.</li>
+            <li>1절(자기소개·부정) → 2절(라이벌 저격: 메시·월드컵) → 클라이맥스(합리화+시우우) → 수미상관 엔딩 구조 유지.</li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">STEP B · AI 발라드 음원</span>
+          <h3>Suno 작곡 + UVR5 + RVC 보이스 변환</h3>
+          <ul>
+            <li>Suno/Udio에서 90~2000년대 한국 감성 록발라드 프롬프트로 2분+ 완곡 생성.</li>
+            <li>UVR5로 보컬/반주 분리 후, RVC 모델로 타깃 인물 음색 입히고 -14 LUFS(유튜브 권장) 수준으로 마스터링.</li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">STEP C · 실사 베이스 선별</span>
+          <h3>예능 무대 + 대기실 리액션 컷 수집</h3>
+          <ul>
+            <li>정면/측면/풀샷이 골고루 있는 노래 경연 무대 클립과 대기실 클로즈업 리액션 8~10개 확보.</li>
+            <li>가사가 “메시/월드컵”을 찌르는 시점에 맞출 안경/고뇌/놀람 표정 리액션 컷 매칭.</li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">STEP D · Face Swap + 립싱크</span>
+          <h3>안경·손 보존 마스킹 합성</h3>
+          <ul>
+            <li>FaceFusion(또는 상용 AI 스왑)에 `face_enhancer` + `occlusion` 마스크를 켜서 안경테·마이크·손 가림 보존.</li>
+            <li>무대 열창 컷은 최종 오디오에 맞춰 립싱크 후처리 적용.</li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">STEP E · 컷 편집 &amp; 디졸브</span>
+          <h3>리액션 1.5~3초 + 무대 0.7초 디졸브</h3>
+          <ul>
+            <li>가사 펀치라인 끝부분에 대기실 리액션 1.5~3.0초 삽입(단, 지루하지 않게 의외의 카메오 2~3명 혼합).</li>
+            <li>무대 앵글 전환 시 0.6~1.0초 크로스디졸브로 한국 음악 예능 특유의 감성 호흡 재현.</li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">STEP F · 9:16 액자 &amp; 한/영 자막</span>
+          <h3>상단 2줄 제목 + 이중 자막 + 면책 표기</h3>
+          <ul>
+            <li>1080×1920 세로 캔버스 중앙에 16:9 배치, 상단 흰/노랑 2줄 굵은 제목 고정.</li>
+            <li>하단 손글씨 한/영 이중 자막 + 설명란 AI 패러디 가상 영상 고지 및 영문 요약/태그 추가.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>AI 역설계 공유 리포트 · 2026-11-21</div>
+      <div>실측 근거: 클로드눈(컷표.json · 컷표.png · 정밀분석) + 클로드귀(소리표.json · 소리표.png · 대사.txt · 효과음.txt)</div>
+    </footer>
+
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-top">
+      <div id="lbTitle" class="lightbox-title">이미지 상세 보기</div>
+      <div class="lightbox-controls">
+        <button class="lb-btn" id="lbPrev">← 이전</button>
+        <button class="lb-btn" id="lbNext">다음 →</button>
+        <button class="lb-btn" id="lbClose">닫기 (ESC)</button>
+      </div>
+    </div>
+    <div class="lightbox-stage">
+      <img id="lbImg" src="" alt="" />
+    </div>
+    <div id="lbCaption" class="lightbox-caption"></div>
+  </div>
+
+  <script>
+    // 1. Lightbox
+    const zoomables = Array.from(document.querySelectorAll('img.zoomable'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbTitle = document.getElementById('lbTitle');
+    const lbCaption = document.getElementById('lbCaption');
+    let currentIdx = -1;
+
+    function showLightboxItem(idx) {
+      if (idx < 0 || idx >= zoomables.length) return;
+      currentIdx = idx;
+      const el = zoomables[idx];
+      lbImg.src = el.getAttribute('src');
+      lbTitle.textContent = el.dataset.title || el.alt || '이미지';
+      lbCaption.textContent = el.dataset.caption || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function openLightboxBySrc(src, title, caption) {
+      const idx = zoomables.findIndex(el => el.getAttribute('src') === src);
+      if (idx !== -1) {
+        showLightboxItem(idx);
+      } else {
+        currentIdx = -1;
+        lbImg.src = src;
+        lbTitle.textContent = title || '';
+        lbCaption.textContent = caption || '';
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    zoomables.forEach((el, idx) => {
+      el.addEventListener('click', () => showLightboxItem(idx));
+    });
+
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', () => {
+      if (zoomables.length) showLightboxItem((currentIdx - 1 + zoomables.length) % zoomables.length);
+    });
+    document.getElementById('lbNext').addEventListener('click', () => {
+      if (zoomables.length) showLightboxItem((currentIdx + 1) % zoomables.length);
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft' && zoomables.length) showLightboxItem((currentIdx - 1 + zoomables.length) % zoomables.length);
+      if (e.key === 'ArrowRight' && zoomables.length) showLightboxItem((currentIdx + 1) % zoomables.length);
+    });
+
+    // 2. Cut Table Filter & Search
+    const cutSearch = document.getElementById('cutSearch');
+    const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+    const rows = Array.from(document.querySelectorAll('#cutTable tbody tr'));
+    let activeFilter = 'all';
+
+    function applyTableFilter() {
+      const q = (cutSearch.value || '').trim().toLowerCase();
+      rows.forEach(row => {
+        const type = row.dataset.type;
+        const text = row.textContent.toLowerCase();
+        const matchType = activeFilter === 'all' || type === activeFilter;
+        const matchQuery = !q || text.includes(q);
+        row.style.display = (matchType && matchQuery) ? '' : 'none';
+      });
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        applyTableFilter();
+      });
+    });
+
+    cutSearch.addEventListener('input', applyTableFilter);
+  </script>
+</body>
+</html>
